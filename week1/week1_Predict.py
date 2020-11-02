@@ -1,5 +1,5 @@
 import numpy as np
-from Train import sigmoid
+from week1_Train import sigmoid
 
 
 def predict(X, w, b):

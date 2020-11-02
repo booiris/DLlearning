@@ -43,7 +43,7 @@ def forward_propagation(X, parameters):
 
 
 def calculate_cost(A, Y):
-    m = Y.shape(1)
+    m = Y.shape[1]
 
     logprobs = np.multiply(np.log(A), Y) + np.multiply(np.log(1 - A), 1 - Y)
     cost = -1 / m * np.sum(logprobs)
@@ -54,7 +54,7 @@ def calculate_cost(A, Y):
 
 
 def back_propagation(parameters, cache, X, Y):
-    m = X.shape(1)
+    m = X.shape[1]
     w2 = parameters["w2"]
     A1 = cache["A1"]
     A2 = cache["A2"]
@@ -76,7 +76,7 @@ def back_propagation(parameters, cache, X, Y):
     return grads
 
 
-def update_prameters(parmeters,grads,learning_rate = 1.2):
+def update_prameters(parmeters, grads, learning_rate=1.2):
     w1 = parmeters["w1"]
     b1 = parmeters["b1"]
     w2 = parmeters["w2"]
@@ -101,11 +101,23 @@ def update_prameters(parmeters,grads,learning_rate = 1.2):
     return parameters
 
 
-def train(X,Y,learning_iterations = 10000):
-    parameters = init_parameters(X.shape(1),)
+def train(X, Y, n_h, learning_rate, learning_iterations=10000, ):
+    n_x = X.shape[0]
+    n_y = Y.shape[0]
 
+    parameters = init_parameters(n_x, n_h, n_y)
 
+    for i in range(0, learning_iterations):
 
+        cache = forward_propagation(X, parameters)
 
+        cost = calculate_cost(cache["A2"], Y)
 
+        grads = back_propagation(parameters, cache, X, Y)
 
+        parameters = update_prameters(parameters, grads,learning_rate)
+
+        if i % 1000 == 0:
+            print("Cost after iteration %i: %f" % (i, cost))
+
+    return parameters

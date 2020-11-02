@@ -1,8 +1,8 @@
 import numpy as np
 from DataSet import dataset
 import matplotlib.pyplot as plt
-from Train import train
-from Predict import predict
+from week1_Train import train
+from week1_Predict import predict
 
 train_x, train_y, test_x, test_y, classes = dataset()  # 导入数据
 
